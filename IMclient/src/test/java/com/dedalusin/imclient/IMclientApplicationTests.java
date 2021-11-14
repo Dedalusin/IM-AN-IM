@@ -1,10 +1,10 @@
-package com.dedalusin.imanim;
+package com.dedalusin.imclient;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class ImAnImApplicationTests {
+class IMclientApplicationTests {
 
     @Test
     void contextLoads() {
