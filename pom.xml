@@ -7,6 +7,7 @@
     <version>0.0.1-SNAPSHOT</version>
     <name>IM-AN-IM</name>
     <description>IM-AN-IM</description>
+    <packaging>pom</packaging>
 
     <modules>
         <module>IMserver</module>
