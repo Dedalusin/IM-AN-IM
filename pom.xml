@@ -13,6 +13,7 @@
         <module>IMserver</module>
         <module>IMclient</module>
         <module>webGate</module>
+        <module>common</module>
     </modules>
 
     <properties>
@@ -53,6 +54,23 @@
                     <artifactId>junit-vintage-engine</artifactId>
                 </exclusion>
             </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.curator</groupId>
+            <artifactId>curator-recipes</artifactId>
+            <version>5.2.0</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.apache.curator/curator-framework -->
+        <dependency>
+            <groupId>org.apache.curator</groupId>
+            <artifactId>curator-framework</artifactId>
+            <version>5.2.0</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.apache.curator/curator-client -->
+        <dependency>
+            <groupId>org.apache.curator</groupId>
+            <artifactId>curator-client</artifactId>
+            <version>5.2.0</version>
         </dependency>
     </dependencies>
 
