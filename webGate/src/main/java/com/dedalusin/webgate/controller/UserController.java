@@ -18,7 +18,7 @@ import java.util.List;
  * 用户登录验证，返回netty node和token userid便于netty进行鉴权，这里all in
  */
 @RestController
-@RequestMapping(value = "/user", produces = "MediaType.APPLICATION_JSON_VALUE"+";charset=utf-8")
+@RequestMapping(value = "/user", produces = "MediaType.APPLICATION_JSON_VALUE" + ";charset=utf-8")
 public class UserController {
 
     @Resource
@@ -31,7 +31,7 @@ public class UserController {
     ) {
         List<ImNode> nodes = imLoadBalance.getWorkers();
         Collections.sort(nodes);
-        LoginResponse loginResponse = LoginResponse.builder().userId(username).token(username).imNode(nodes.get(0)).build();
+        LoginResponse loginResponse = LoginResponse.builder().userId(username).token(username).imNode((nodes.size() == 0)? null : nodes.get(0)).build();
         return JsonUtil.pojoToJson(loginResponse);
     }
 }

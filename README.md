@@ -7,4 +7,4 @@ A basic IM system.
 - server netty服务器，负责与客户端通信和消息转发，消息类型使用protobuf
 - client 客户端
 ------- 
-其余使用redis作为session存储，zookeeper实现分布式命名服务以及在线统计，消息记录可结合消息队列异步推送至离线消息库
+其余使用redis作为session存储，zookeeper实现分布式命名服务以及在线统计，消息记录可结合消息队列（kafka或其它MQ框架）异步推送至离线消息库
