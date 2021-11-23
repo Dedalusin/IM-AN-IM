@@ -1,5 +1,6 @@
 package zk;
 
+import Constants.ServerConstants;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.curator.framework.CuratorFramework;
@@ -23,7 +24,6 @@ public class CuratorZKclient {
     private static CuratorZKclient singleton = null;
 
     public static CuratorZKclient getSingleton() {
-        //就实际上使用了data注解不知道这里为什么还要加getSingleton
         if (null == singleton) {
             //bean 生成不在common模块
             singleton = SpringContextUtil.getBean("curatorzkClient");
@@ -108,4 +108,12 @@ public class CuratorZKclient {
         }
         return null;
     }
+
+    public static Long getIdByPath(String path) {
+        if (null == path || !path.contains(ServerConstants.PATH_PREFIX_NO_STRIP)) {
+            throw new RuntimeException("path有误");
+        }
+        return Long.parseLong(path.split(ServerConstants.PATH_PREFIX_NO_STRIP)[1]);
+    }
+
 }

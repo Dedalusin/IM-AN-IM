@@ -41,16 +41,9 @@ public class ImLoadBalance {
                 e.printStackTrace();
             }
             ImNode node = JsonUtil.jsonBytes2Object(payload, ImNode.class);
-            node.setId(getIdByPath(s));
+            node.setId(CuratorZKclient.getIdByPath(s));
             return node;
         }).collect(Collectors.toList());
         return workers;
-    }
-
-    public Long getIdByPath(String path) {
-        if (null == path || !path.contains(ServerConstants.PATH_PREFIX_NO_STRIP)) {
-            throw new RuntimeException("path有误");
-        }
-        return Long.parseLong(path.split(ServerConstants.PATH_PREFIX_NO_STRIP)[1]);
     }
 }
