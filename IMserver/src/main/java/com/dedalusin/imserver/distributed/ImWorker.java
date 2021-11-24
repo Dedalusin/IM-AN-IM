@@ -17,7 +17,7 @@ import zk.CuratorZKclient;
 @Slf4j
 public class ImWorker {
 
-    private CuratorFramework client = null;
+    private volatile CuratorFramework client = null;
     //Znode路径，创建后返回
     private String pathRegistered = null;
 
@@ -25,16 +25,12 @@ public class ImWorker {
 
     private static ImWorker singleInstance = null;
 
+    private static class SingletonImWorker{
+        public static final ImWorker INSTANCE = new ImWorker();
+    }
+
     public static ImWorker getInst() {
-        if (null == singleInstance) {
-            synchronized (ImWorker.class) {
-                if (null == singleInstance) {
-                    singleInstance = new ImWorker();
-                    singleInstance.localNode = new ImNode();
-                }
-            }
-        }
-        return singleInstance;
+        return SingletonImWorker.INSTANCE;
     }
 
     private ImWorker() {
