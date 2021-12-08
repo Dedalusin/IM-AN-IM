@@ -2,6 +2,9 @@ package com.dedalusin.imserver.distributed;
 
 import chatBean.Notification;
 import chatBean.msg.ProtoMsg;
+import codec.ProtobufDecoder;
+import com.dedalusin.imserver.handler.ImNodeHeartBeatClientHandler;
+import com.dedalusin.imserver.handler.ServerExceptionHandler;
 import com.dedalusin.imserver.protoBuilder.NotificationMsgBuilder;
 import entity.ImNode;
 import io.netty.bootstrap.Bootstrap;
@@ -86,6 +89,10 @@ public class PeerSender {
                     @Override
                     public void initChannel(SocketChannel ch) {
                         //protobuf的编码解码器、心跳、异常
+                        ch.pipeline().addLast("decoder", new ProtobufDecoder());
+                        ch.pipeline().addLast("encoder", new ProtobufDecoder());
+                        ch.pipeline().addLast("imNodeHeartBeatClientHandler", new ImNodeHeartBeatClientHandler());
+                        ch.pipeline().addLast("exceptionHandler", new ServerExceptionHandler());
                     }
                 });
                 log.info(new Date() + "开始连接分布式节点:{}", rmNode.toString());
@@ -93,7 +100,7 @@ public class PeerSender {
                 f.addListener(connectedListener);
 
             } else if (b.group() != null) {
-                log.info(new Date() + "再一次开始连接分布式节点", rmNode.toString());
+                log.info(new Date() + "再一次开始连接分布式节点: {}", rmNode.toString());
                 ChannelFuture f = b.connect();
                 f.addListener(connectedListener);
             }
@@ -108,8 +115,8 @@ public class PeerSender {
     }
 
     public void writeAndFlush(Object pkg) {
-        if (connectFlag == false) {
-            log.error("分布式节点未连接：", rmNode.toString());
+        if (!connectFlag) {
+            log.error("分布式节点未连接：{}", rmNode.toString());
             return;
         }
         channel.writeAndFlush(pkg);
